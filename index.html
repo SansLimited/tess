@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Top-Up Free Fire</title>
+</head>
+<body>
+  <h1>Top-Up Free Fire</h1>
+  <form id="ffForm">
+    <label for="userId">User ID:</label>
+    <input type="text" id="userId" name="userId" required>
+  </form>
+  <div id="result"></div>
+
+  <script type="module">
+    import ff from './js/module.js';
+
+    document.getElementById('userId').addEventListener('input', async function(event) {
+      const userId = event.target.value;
+      const resultDiv = document.getElementById('result');
+
+      if (userId) {
+        try {
+          const result = await ff(userId);
+
+          if (result.success) {
+            resultDiv.innerHTML = `
+              <p>Game: ${result.game}</p>
+              <p>ID: ${result.id}</p>
+              <p>Nama: ${result.name}</p>
+            `;
+          } else {
+            resultDiv.innerHTML = `<p>${result.message}</p>`;
+          }
+        } catch (error) {
+          resultDiv.innerHTML = `<p>Terjadi kesalahan: ${error.message}</p>`;
+        }
+      } else {
+        resultDiv.innerHTML = '';
+      }
+    });
+  </script>
+</body>
+</html>
