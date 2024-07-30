@@ -20,7 +20,7 @@
       const userId = event.target.value;
       const resultDiv = document.getElementById('result');
 
-      if (userId) {
+      if (userId.trim()) {
         try {
           const result = await ff(userId);
 
