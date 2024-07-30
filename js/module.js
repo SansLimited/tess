@@ -29,12 +29,20 @@ export default async function ff(userId) {
 
     const data = await response.json();
 
-    return {
-      success: true,
-      game: 'Garena Free Fire',
-      id: Number(userId),
-      name: data.confirmationFields.roles[0].role
-    };
+    console.log('API Response:', data); // Tambahkan ini untuk debug
+
+    // Periksa apakah data.confirmationFields dan data.confirmationFields.roles ada
+    if (data.confirmationFields && data.confirmationFields.roles && data.confirmationFields.roles.length > 0) {
+      return {
+        success: true,
+        game: 'Garena Free Fire',
+        id: Number(userId),
+        name: data.confirmationFields.roles[0].role
+      };
+    } else {
+      return { success: false, message: 'Data role tidak ditemukan dalam respons API.' };
+    }
+
   } catch (error) {
     return { success: false, message: error.message };
   }
